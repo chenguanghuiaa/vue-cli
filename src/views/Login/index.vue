@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="login_container">
     <div class="login_box">
       <!-- 头像区域 -->
@@ -22,6 +23,13 @@
           <el-button type="info" @click="resetLogin">重置</el-button>
         </el-form-item>
       </el-form>
+=======
+<div class="login">
+    <div class="login-box">
+        <div class="avatar_box">
+            <img src="../../assets/logo.png" alt="">
+        </div>
+>>>>>>> ee554a30f85392ffa90db8474520992147aa4ada
     </div>
   </div>
 </template>
@@ -85,6 +93,19 @@ export default {
     box-shadow: 0 0 10px #ddd;
     position: absolute;
     left: 50%;
+<<<<<<< HEAD
+=======
+    transform: translate(-50%,-50%);
+    .avatar_box {
+    height: 130px;
+    width: 130px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 0 10px #ddd;
+    position: absolute;
+    left: 50%;
+>>>>>>> ee554a30f85392ffa90db8474520992147aa4ada
     transform: translate(-50%, -50%);
     background-color: #fff;
     img {
