@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-  <!-- app组件 -->
-  <router-view></router-view>
+    <!-- 路由占位符 -->
+    <router-view></router-view>
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  name: 'app'
+}
+</script>
 
+<style>
 </style>
