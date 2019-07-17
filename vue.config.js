@@ -1,4 +1,6 @@
 module.exports = {
-  port: 8080,
-  open: true
+  devServer: {
+    port: 8080,
+    open: true
+  }
 }
