@@ -26,4 +26,4 @@ yarn run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).123
+See [Configuration Reference](https://cli.vuejs.org/config/).
