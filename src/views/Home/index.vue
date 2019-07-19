@@ -15,7 +15,7 @@
       <el-aside :width="width">
         <!-- 侧边栏菜单区域 -->
         <div class="toggle-button" @click="toggleCollapse">|||</div>
-        <el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="iscollapse" :collapse-transition="false">
+        <el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="iscollapse" :collapse-transition="false" router :default-active="activePath">
           <el-submenu :index="menu.id + ''" v-for="menu in menus" :key="menu.id">
             <!-- 一级菜单的模板区域 -->
             <template slot="title">
@@ -25,7 +25,7 @@
               <span>{{menu.authName}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="subMenu.id + ''" v-for="subMenu in menu.children" :key="subMenu.id">
+            <el-menu-item :index="'/'+subMenu.path" v-for="subMenu in menu.children" :key="subMenu.id" @click="saveNavState(activePath)">
               <!-- 字体图标 -->
               <i class="el-icon-menu"></i>
               <!-- 文本 -->
@@ -35,7 +35,9 @@
         </el-menu>
       </el-aside>
       <!-- 右侧内容主体 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 
@@ -51,10 +53,12 @@ export default {
       '102': 'iconfont icon-danju',
       '145': 'iconfont icon-baobiao'
     },
-    iscollapse: false
+    iscollapse: false,
+    activePath: ''
   }),
   created() {
     this.getMenus()
+    this.activePath = sessionStorage.getItem('activePath')
   },
   methods: { // 方法
     logout () {
@@ -62,14 +66,21 @@ export default {
       sessionStorage.clear() // clear：清空
       this.$router.push('/login')
     },
+    // 获取所有菜单
     async getMenus() {
       const { data: { data, meta } } = await this.$http.get('menus')
       if (meta.status !== 200) return this.$message.error(meta.msg)
       this.menus = data
-      console.log(this.menus)
+      // console.log(this.menus)
     },
+    // 点击按钮，切换菜单的折叠与展开
     toggleCollapse() {
       this.iscollapse = !this.iscollapse
+    },
+    // 保持链接的激活状态
+    saveNavState(activePath) {
+      this.activePath = activePath
+      sessionStorage.setItem('activePath', activePath)
     }
   },
   computed: { // 计算属性
