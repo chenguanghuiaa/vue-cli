@@ -25,7 +25,7 @@
               <span>{{menu.authName}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/'+subMenu.path" v-for="subMenu in menu.children" :key="subMenu.id" @click="saveNavState(activePath)">
+            <el-menu-item :index="'/'+subMenu.path" v-for="subMenu in menu.children" :key="subMenu.id" @click="saveNavState('/'+subMenu.path)">
               <!-- 字体图标 -->
               <i class="el-icon-menu"></i>
               <!-- 文本 -->
@@ -71,7 +71,7 @@ export default {
       const { data: { data, meta } } = await this.$http.get('menus')
       if (meta.status !== 200) return this.$message.error(meta.msg)
       this.menus = data
-      // console.log(this.menus)
+      console.log(this.menus)
     },
     // 点击按钮，切换菜单的折叠与展开
     toggleCollapse() {
