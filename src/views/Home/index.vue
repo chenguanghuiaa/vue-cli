@@ -71,7 +71,6 @@ export default {
       const { data: { data, meta } } = await this.$http.get('menus')
       if (meta.status !== 200) return this.$message.error(meta.msg)
       this.menus = data
-      console.log(this.menus)
     },
     // 点击按钮，切换菜单的折叠与展开
     toggleCollapse() {
