@@ -8,6 +8,8 @@ import WelCome from './views/Home/welCome'
 import Users from './views/Home/users'
 import Rights from './views/Home/power/rights'
 import Roles from './views/Home/power/roles'
+import Categories from './views/Home/goods/categories'
+import Params from './views/Home/goods/params'
 
 Vue.use(Router)
 
@@ -30,6 +32,12 @@ const router = new Router({
       }, {
         path: '/roles',
         component: Roles
+      }, {
+        path: '/categories',
+        component: Categories
+      }, {
+        path: '/params',
+        component: Params
       }] }
   ]
 })

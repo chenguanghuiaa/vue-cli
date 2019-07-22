@@ -40,7 +40,7 @@
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(
               scope.row.id)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" :disabled="scope.row.id==500" @click="removeUserById(scope.row.id)"></el-button>
             <!-- 分配角色按钮 -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>

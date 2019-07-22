@@ -25,8 +25,13 @@ import { Button,
   Tag,
   Tree,
   Select,
-  Option } from 'element-ui'
+  Option,
+  Cascader,
+  Alert,
+  Tabs,
+  TabPane } from 'element-ui'
 
+// 组件
 Vue
   .use(Button)
   .use(Form)
@@ -54,5 +59,11 @@ Vue
   .use(Tree)
   .use(Select)
   .use(Option)
+  .use(Cascader)
+  .use(Alert)
+  .use(Tabs)
+  .use(TabPane)
+
+// 方法
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -51,7 +51,7 @@
         <el-table-column label="操作" width="300px">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" :disabled="scope.row.id===30">删除</el-button>
             <el-button size="mini" type="warning" icon="el-icon-setting" @click="showSetRightDialog(scope.row)">分配权限</el-button>
           </template>
         </el-table-column>
