@@ -37,7 +37,7 @@
                 <el-input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
                 </el-input>
                 <!-- 添加按钮 -->
-                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
+                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ 添加</el-button>
               </template>
             </el-table-column>
             <!-- 索引列 -->
@@ -154,7 +154,8 @@ export default {
       attr_name: [
         { required: true, message: '请输入参数名称', trigger: 'blur' }
       ]
-    }
+    },
+    inputVisible: false
   }),
   computed: {
     // 当前选中的三级分类的Id
@@ -173,6 +174,7 @@ export default {
     this.getCates()
   },
   methods: {
+    // 获取所有的商品分类列表
     async getCates() {
       const { data: { data, meta } } = await this.$http.get('categories')
       if (meta.status !== 200) {
@@ -201,7 +203,15 @@ export default {
       if (meta.status !== 200) {
         return this.$message.error('获取参数列表失败！')
       }
-      // console.log(data)
+      data.forEach(item => {
+        // split()：以括号内的字符串分割为数组
+        item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
+        // 控制文本框的显示与隐藏
+        item.inputVisible = false
+        // 文本框中输入的值
+        item.inputValue = ''
+      })
+      console.log(data)
       if (this.activeName === 'many') {
         this.manyTableData = data
       } else {
@@ -292,9 +302,62 @@ export default {
       } catch (err) { // 失败
         this.$message.info('已取消删除')
       }
+    },
+    // 文本框失去焦点，或摁下了 Enter 都会触发
+    handleInputConfirm(row) {
+      if (row.inputValue.trim().length === 0) {
+        row.inputValue = ''
+        row.inputVisible = false
+        return
+      }
+      // 如果没有return，则证明输入的内容，需要做后续处理
+      row.attr_vals.push(row.inputValue.trim())
+      row.inputValue = ''
+      row.inputVisible = false
+      // 需要发起请求，保存这次操作
+      this.saveAttrVals(row)
+    },
+    // 将对 attr_vals 的操作，保存到数据库
+    async saveAttrVals(row) {
+      // 需要发起请求，保存这次操作
+      const { data: res } = await this.$http.put(
+        `categories/${this.cateId}/attributes/${row.attr_id}`,
+        {
+          attr_name: row.attr_name,
+          attr_sel: row.attr_sel,
+          attr_vals: row.attr_vals.join(' ')
+        }
+      )
+
+      if (res.meta.status !== 200) {
+        return this.$message.error('修改参数项失败！')
+      }
+
+      this.$message.success('修改参数项成功！')
+    },
+    // 点击按钮，展示文本输入框
+    showInput(row) {
+      row.inputVisible = true
+      // 让文本框自动获得焦点
+      // $nextTick 方法的作用，就是当页面上元素被重新渲染之后，才会指定回调函数中的代码
+      // vue 官方的 api，$nextTick 主要用于监听 DOM 的修改
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    // 删除对应的参数可选项
+    handleClose(i, row) {
+      row.attr_vals.splice(i, 1)
+      this.saveAttrVals(row)
     }
   }
 }
 </script>
 <style lang='less' scoped>
+.el-tag {
+  margin-right:10px;
+}
+.el-input {
+  width: 150px;
+}
 </style>

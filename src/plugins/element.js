@@ -29,7 +29,14 @@ import { Button,
   Cascader,
   Alert,
   Tabs,
-  TabPane } from 'element-ui'
+  TabPane,
+  Steps,
+  Step,
+  CheckboxGroup,
+  Checkbox,
+  Upload,
+  Timeline,
+  TimelineItem } from 'element-ui'
 
 // 组件
 Vue
@@ -63,6 +70,13 @@ Vue
   .use(Alert)
   .use(Tabs)
   .use(TabPane)
+  .use(Steps)
+  .use(Step)
+  .use(CheckboxGroup)
+  .use(Checkbox)
+  .use(Upload)
+  .use(Timeline)
+  .use(TimelineItem)
 
 // 方法
 Vue.prototype.$message = Message
